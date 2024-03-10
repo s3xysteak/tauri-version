@@ -1,5 +1,3 @@
-import { version, type VersionOption } from './version'
-
 export const findSubStringEndIndex = (
   str: string,
   sub: string,
@@ -16,7 +14,7 @@ export const replaceSubstring = (
   end: number
 ) => str.substring(0, start) + replacement + str.substring(end)
 
-export function tomlParser(content: string, options: VersionOption) {
+export function tomlParser(content: string, version: string) {
   const packageEndIndex = findSubStringEndIndex(content, '[package]')
 
   const versionEndIndex = findSubStringEndIndex(
@@ -30,7 +28,7 @@ export function tomlParser(content: string, options: VersionOption) {
 
   return replaceSubstring(
     content,
-    version(content.substring(firstQuoteIndex + 1, secondQuoteIndex), options),
+    version,
     firstQuoteIndex + 1,
     secondQuoteIndex
   )

@@ -6,7 +6,6 @@ import {
   findSubStringEndIndex,
   tomlParser
 } from '@core/tomlParser'
-import { jsonParser } from '@core/jsonParser'
 import { version } from '@core/version'
 
 it('replaceSubstring', () => {
@@ -28,24 +27,10 @@ it('version', () => {
 
 it('tomlParser', () => {
   const content = readFileSync('test/files/raw.toml', 'utf-8')
-  const val = tomlParser(content, 'patch')
+  const val = tomlParser(content, '0.0.5')
   writeFileSync('test/files/patch.toml', val)
 
   expect(readFileSync('test/files/patch.toml', 'utf-8')).toBe(
     readFileSync('test/files/patch-target.toml', 'utf-8')
-  )
-})
-
-it('jsonParser', () => {
-  const content = readFileSync('test/files/raw.json', 'utf-8')
-  const val = jsonParser(content, 'patch')
-  writeFileSync('test/files/patch.json', val)
-
-  expect(
-    readFileSync('test/files/patch.json', 'utf-8').replace(/\r\n/g, '\n').trim()
-  ).toBe(
-    readFileSync('test/files/patch-target.json', 'utf-8')
-      .replace(/\r\n/g, '\n')
-      .trim()
   )
 })
