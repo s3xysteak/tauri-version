@@ -18,7 +18,7 @@ cli.version(version).option('[patch|minor|major]', tip).help()
 cli
   .command('[version]', tip)
   .option(
-    '-m <message>',
+    '-m, --message <message>',
     'Commit message. Use %s to replace the version number.'
   )
   .action((version, options) => {
