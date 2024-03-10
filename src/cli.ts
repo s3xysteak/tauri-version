@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 
+import { join } from 'node:path'
 import { execSync } from 'node:child_process'
 
 import { consola } from 'consola'
@@ -16,22 +17,28 @@ cli.version(version).option('[patch|minor|major]', tip).help()
 
 cli
   .command('[version]', tip)
-  .option('-a, --add', 'git add changes')
-  .option('--path <path>', 'path to src-tauri')
+  .option(
+    '-m <message>',
+    'Commit message. Use %s to replace the version number.'
+  )
   .action((version, options) => {
     try {
-      tauriVersion(version)
-      if (options.add) {
-        const files = ['Cargo.toml', 'tauri.conf.json']
-        execSync(
-          `git add ${files
-            .map(file => options.path ?? './src-tauri/' + file)
-            .join(' ')}`
-        )
-      }
-      consola.success(
-        'The versions of cargo.toml & tauri.conf.json updated successfully'
-      )
+      const { message = '%s' } = options
+      const ver = tauriVersion(version)
+
+      const getPath = (path: string) => join(process.cwd(), path)
+      const pathList = [
+        './package.json',
+        './src-tauri/tauri.conf.json',
+        './src-tauri/Cargo.toml'
+      ]
+      execSync(`git add ${pathList.map(path => getPath(path)).join(' ')}`)
+
+      const parsedMessage = message.replace('%s', ver)
+      execSync(`git commit -m "${parsedMessage}"`)
+      execSync(`git tag v${ver}`)
+
+      consola.success('v' + ver)
     } catch (error) {
       consola.error(String(error))
     }
