@@ -1,10 +1,23 @@
 {
   "name": "tauri-version",
-  "private": true,
+  "private": false,
   "version": "0.0.0",
   "type": "module",
+  "license": "MIT",
+  "description": "Update version for tauri-app.",
+  "keywords": [
+    "tauri",
+    "release",
+    "releases",
+    "cli"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/s3xysteak/tauri-version.git"
+  },
   "files": [
-    "dist"
+    "dist",
+    "*.mjs"
   ],
   "main": "./dist/index.mjs",
   "module": "./dist/index.mjs",
