@@ -10,9 +10,9 @@ const cli = cac('tauri-version')
 const tip =
   'Accept <patch|minor|major>. Increment the version by the specified level.'
 
-cli.version(version).option('<patch|minor|major>', tip).help()
+cli.version(version).option('[patch|minor|major]', tip).help()
 
-cli.command('<options>', tip).action(options => {
+cli.command('[options]', tip).action(options => {
   try {
     tauriVersion(options)
     consola.success(
