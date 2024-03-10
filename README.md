@@ -1,10 +1,10 @@
-# tauri-version
+# :tada: tauri-version
 
 English | [简体中文](./README-zh.md)
 
 A simple tool for conveniently upgrading the tauri-app version, similar in function to `npm version`.
 
-## Feature
+## :rocket: Feature
 
 Automatically update the version number in the following files:
 
@@ -14,7 +14,7 @@ Automatically update the version number in the following files:
 
 Submit these changes and tag the commit with a label named `v[version number]`.
 
-## Usage
+## :wrench: Usage
 
 If the current version is `v0.0.2`:
 
