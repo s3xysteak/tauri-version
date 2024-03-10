@@ -32,6 +32,7 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "test": "vitest",
+    "test-once": "vitest run",
     "release": "esno ./scripts/release.ts"
   },
   "devDependencies": {
