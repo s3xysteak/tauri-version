@@ -21,7 +21,12 @@ export default defineConfig({
       }
     },
     rollupOptions: {
-      external: ['node:fs', 'node:path', ...Object.keys(pkg.dependencies || {})]
+      external: [
+        'node:fs',
+        'node:path',
+        'node:child_process',
+        ...Object.keys(pkg.dependencies || {})
+      ]
     }
   },
   test: {
