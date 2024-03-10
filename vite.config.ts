@@ -6,6 +6,7 @@ import { defineConfig } from 'vite'
 import { configDefaults } from 'vitest/config'
 
 import dts from 'vite-plugin-dts'
+import pkg from './package.json'
 
 export default defineConfig({
   plugins: [dts({ rollupTypes: true })],
@@ -20,7 +21,7 @@ export default defineConfig({
       }
     },
     rollupOptions: {
-      external: ['node:fs', 'node:path', 'cac']
+      external: ['node:fs', 'node:path', ...Object.keys(pkg.dependencies || {})]
     }
   },
   test: {
