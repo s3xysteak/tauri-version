@@ -31,7 +31,8 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "test": "vitest"
+    "test": "vitest",
+    "release": "esno ./scripts/release.ts"
   },
   "devDependencies": {
     "@tsconfig/node20": "^20.1.2",
