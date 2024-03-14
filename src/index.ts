@@ -1,60 +1,43 @@
 import * as process from 'node:process'
-import { readFileSync, writeFileSync } from 'node:fs'
-import { join, normalize } from 'node:path'
+import { join } from 'node:path'
 
 import { tomlParser } from '@core/tomlParser'
 import { type VersionOption, version } from '@core/version'
-
-function isV1(conf: Record<string, any>): boolean {
-  return !!conf?.package
-}
+import { io, isV1 } from '@core/io'
 
 function main(
   options: VersionOption,
   tauriPath = './src-tauri/',
   packagePath = './',
 ) {
-  const getPath = (path: string) => normalize(join(process.cwd(), path))
+  const getPath = (path: string) =>
+    (fileName: string) => join(join(process.cwd(), path), fileName)
+
+  /** IO START */
 
   /** package.json */
-  const packageContent = readFileSync(
-    join(getPath(packagePath), 'package.json'),
-    'utf-8',
-  )
-  const packageObj = JSON.parse(packageContent)
+  const packageIO = io(getPath(packagePath)('package.json'))
+  const packageObj = JSON.parse(packageIO.read())
   const ver = version(packageObj.version, options)
   packageObj.version = ver
-  writeFileSync(
-    join(getPath(packagePath), 'package.json'),
-    JSON.stringify(packageObj, null, 2),
-  )
+  packageIO.write(JSON.stringify(packageObj, null, 2))
 
   /** Cargo */
-  const tomlContent = readFileSync(
-    join(getPath(tauriPath), 'Cargo.toml'),
-    'utf-8',
-  )
-  writeFileSync(
-    join(getPath(tauriPath), 'Cargo.toml'),
-    tomlParser(tomlContent, ver),
-  )
+  const tomlIO = io(getPath(tauriPath)('Cargo.toml'))
+  tomlIO.write(tomlParser(tomlIO.read(), ver))
 
   /** Conf */
-  const confContent = readFileSync(
-    join(getPath(tauriPath), 'tauri.conf.json'),
-    'utf-8',
-  )
-  const confObj = JSON.parse(confContent)
+  const confIO = io(getPath(tauriPath)('tauri.conf.json'))
+  const confObj = JSON.parse(confIO.read())
 
   if (isV1(confObj))
     confObj.package.version = ver
   else
     confObj.version = ver
 
-  writeFileSync(
-    join(getPath(tauriPath), 'tauri.conf.json'),
-    JSON.stringify(confObj, null, 2),
-  )
+  confIO.write(JSON.stringify(confObj, null, 2))
+
+  /** IO END */
 
   return ver
 }
