@@ -10,6 +10,7 @@
     /* Bundler mode */
     "moduleResolution": "Bundler",
     "paths": {
+      "@/*": ["src/*"],
       "@core/*": ["src/core/*"]
     },
     "resolveJsonModule": true,
@@ -23,6 +24,7 @@
     "noEmit": true,
     "isolatedModules": true,
     "skipLibCheck": true
+
   },
   "include": ["src", "test", "scripts", "vite.config.ts"],
   "exclude": ["*.md"]
