@@ -5,11 +5,11 @@ import { tomlParser } from '@core/tomlParser'
 import { type VersionOption, version } from '@core/version'
 import { io, isV1 } from '@core/io'
 
-function main(
-  options: VersionOption,
-  tauriPath = './src-tauri/',
-  packagePath = './',
-) {
+export * from '@core/version'
+export * from '@core/io'
+export * from '@core/tomlParser'
+
+export function tauriVersion(options: VersionOption, tauriPath = './src-tauri/', packagePath = './') {
   const getPath = (path: string) =>
     (fileName: string) => join(join(process.cwd(), path), fileName)
 
@@ -41,5 +41,3 @@ function main(
 
   return ver
 }
-
-export default main

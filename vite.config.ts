@@ -25,6 +25,7 @@ export default defineConfig({
         'node:fs',
         'node:path',
         'node:child_process',
+        'node:process',
         ...Object.keys(pkg.dependencies || {}),
       ],
     },
