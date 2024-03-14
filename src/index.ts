@@ -40,7 +40,11 @@ function tauriVersion(
     'utf-8'
   )
   const confObj = JSON.parse(confContent)
-  confObj.package.version = ver
+  if (confObj.package) { // v1
+    confObj.package.version = ver
+  } else { // v2
+    confObj.version = ver
+  }
   writeFileSync(
     join(getPath(tauriPath), 'tauri.conf.json'),
     JSON.stringify(confObj, null, 2)
