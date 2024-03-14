@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 
+import * as process from 'node:process'
 import { join } from 'node:path'
 import { execSync } from 'node:child_process'
 
@@ -10,8 +11,8 @@ import tauriVersion from '.'
 
 const cli = cac('tauri-version')
 
-const tip =
-  'Accept <patch|minor|major>. Increment the version by the specified level.'
+const tip
+  = 'Accept <patch|minor|major>. Increment the version by the specified level.'
 
 cli.version(version).option('[patch|minor|major]', tip).help()
 
@@ -19,7 +20,7 @@ cli
   .command('[version]', tip)
   .option(
     '-m, --message <message>',
-    'Commit message. Use %s to replace the version number.'
+    'Commit message. Use %s to replace the version number.',
   )
   .action((version, options) => {
     try {
@@ -30,7 +31,7 @@ cli
       const pathList = [
         './package.json',
         './src-tauri/tauri.conf.json',
-        './src-tauri/Cargo.toml'
+        './src-tauri/Cargo.toml',
       ]
       execSync(`git add ${pathList.map(path => getPath(path)).join(' ')}`)
 
@@ -38,8 +39,9 @@ cli
       execSync(`git commit -m "${parsedMessage}"`)
       execSync(`git tag v${ver}`)
 
-      consola.success('v' + ver)
-    } catch (error) {
+      consola.success(`v${ver}`)
+    }
+    catch (error) {
       consola.error(String(error))
     }
   })

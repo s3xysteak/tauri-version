@@ -1,10 +1,10 @@
 import { readFileSync, writeFileSync } from 'node:fs'
-import { it, expect } from 'vitest'
+import { expect, it } from 'vitest'
 
 import {
-  replaceSubstring,
   findSubStringEndIndex,
-  tomlParser
+  replaceSubstring,
+  tomlParser,
 } from '@core/tomlParser'
 import { version } from '@core/version'
 
@@ -31,6 +31,6 @@ it('tomlParser', () => {
   writeFileSync('test/files/patch.toml', val)
 
   expect(readFileSync('test/files/patch.toml', 'utf-8')).toBe(
-    readFileSync('test/files/patch-target.toml', 'utf-8')
+    readFileSync('test/files/patch-target.toml', 'utf-8'),
   )
 })

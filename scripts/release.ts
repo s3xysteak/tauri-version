@@ -1,3 +1,4 @@
+import * as process from 'node:process'
 import { execSync } from 'node:child_process'
 
 const versionList = ['major', 'minor', 'patch'] as const

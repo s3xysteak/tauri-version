@@ -26,6 +26,6 @@
 
 ### 自定义提交信息
 
-`npx tauri-version patch -m "chore: release v%s"`  
-这将会将提交信息改为：  
+`npx tauri-version patch -m "chore: release v%s"`
+这将会将提交信息改为：
 `chore: release v0.0.2`

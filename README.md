@@ -26,6 +26,6 @@ If the current version is `v0.0.2`:
 
 ### Custom Commit Message
 
-`npx tauri-version patch -m "chore: release v%s"`  
-This will change the commit message to:  
+`npx tauri-version patch -m "chore: release v%s"`
+This will change the commit message to:
 `chore: release v0.0.2`

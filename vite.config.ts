@@ -1,6 +1,6 @@
 /// <reference types="vitest" />
 
-import { fileURLToPath, URL } from 'node:url'
+import { URL, fileURLToPath } from 'node:url'
 
 import { defineConfig } from 'vite'
 import { configDefaults } from 'vitest/config'
@@ -17,17 +17,17 @@ export default defineConfig({
       fileName: (format, fileName) => {
         const name = fileName.endsWith('cli') ? 'cli' : 'index'
         const ext = format === 'es' ? 'mjs' : 'cjs'
-        return name + '.' + ext
-      }
+        return `${name}.${ext}`
+      },
     },
     rollupOptions: {
       external: [
         'node:fs',
         'node:path',
         'node:child_process',
-        ...Object.keys(pkg.dependencies || {})
-      ]
-    }
+        ...Object.keys(pkg.dependencies || {}),
+      ],
+    },
   },
   test: {
     environment: 'node',
@@ -35,13 +35,13 @@ export default defineConfig({
       ...configDefaults.exclude,
       'e2e/*',
       '**/public/**',
-      '**/.{vscode,svn}/**'
+      '**/.{vscode,svn}/**',
     ],
-    root: fileURLToPath(new URL('./', import.meta.url))
+    root: fileURLToPath(new URL('./', import.meta.url)),
   },
   resolve: {
     alias: {
-      '@core': fileURLToPath(new URL('./src/core', import.meta.url))
-    }
-  }
+      '@core': fileURLToPath(new URL('./src/core', import.meta.url)),
+    },
+  },
 })
