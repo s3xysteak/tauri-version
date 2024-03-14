@@ -5,7 +5,11 @@ import { join, normalize } from 'node:path'
 import { tomlParser } from '@core/tomlParser'
 import { type VersionOption, version } from '@core/version'
 
-function tauriVersion(
+function isV1(conf: Record<string, any>): boolean {
+  return !!conf?.package
+}
+
+function main(
   options: VersionOption,
   tauriPath = './src-tauri/',
   packagePath = './',
@@ -41,12 +45,12 @@ function tauriVersion(
     'utf-8',
   )
   const confObj = JSON.parse(confContent)
-  if (confObj.package) { // v1
+
+  if (isV1(confObj))
     confObj.package.version = ver
-  }
-  else { // v2
+  else
     confObj.version = ver
-  }
+
   writeFileSync(
     join(getPath(tauriPath), 'tauri.conf.json'),
     JSON.stringify(confObj, null, 2),
@@ -55,4 +59,4 @@ function tauriVersion(
   return ver
 }
 
-export default tauriVersion
+export default main
