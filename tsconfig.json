@@ -1,21 +1,20 @@
 {
   "compilerOptions": {
     "target": "ES2020",
-    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    "lib": ["ESNext"],
     "useDefineForClassFields": true,
-
     "baseUrl": "./",
     "module": "ESNext",
-
     /* Bundler mode */
     "moduleResolution": "Bundler",
+
     "paths": {
       "@/*": ["src/*"],
       "@core/*": ["src/core/*"]
     },
+
     "resolveJsonModule": true,
     "allowImportingTsExtensions": true,
-
     /* Linting */
     "strict": true,
     "noFallthroughCasesInSwitch": true,
