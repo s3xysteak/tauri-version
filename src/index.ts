@@ -9,7 +9,7 @@ export * from '@core/version'
 export * from '@core/io'
 export * from '@core/tomlParser'
 
-export function tauriVersion(options: VersionOption, tauriPath = './src-tauri/', packagePath = './') {
+export function tauriVersion(targetVer: VersionOption, tauriPath = './src-tauri/', packagePath = './') {
   const getPath = (path: string) =>
     (fileName: string) => join(join(process.cwd(), path), fileName)
 
@@ -18,7 +18,7 @@ export function tauriVersion(options: VersionOption, tauriPath = './src-tauri/',
   /** package.json */
   const packageIO = io(getPath(packagePath)('package.json'))
   const packageObj = JSON.parse(packageIO.read())
-  const ver = version(packageObj.version, options)
+  const ver = version(packageObj.version, targetVer)
   packageObj.version = ver
   packageIO.write(JSON.stringify(packageObj, null, 2))
 

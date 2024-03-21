@@ -6,7 +6,7 @@ import { execSync } from 'node:child_process'
 
 import { consola } from 'consola'
 import cac from 'cac'
-import { version } from '../package.json'
+import { version as ver } from '../package.json'
 import { tauriVersion } from '.'
 
 const cli = cac('tauri-version')
@@ -14,7 +14,7 @@ const cli = cac('tauri-version')
 const tip
   = 'Accept <patch|minor|major>. Increment the version by the specified level.'
 
-cli.version(version).option('[patch|minor|major]', tip).help()
+cli.version(ver).option('[patch|minor|major]', tip).help()
 
 cli
   .command('[version]', tip)

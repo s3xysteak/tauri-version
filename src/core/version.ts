@@ -1,6 +1,11 @@
-export type VersionOption = 'patch' | 'minor' | 'major'
+const VERSION_OPTIONS = ['patch', 'minor', 'major'] as const
 
-export function version(str: string, options: VersionOption) {
+export type VersionOption = typeof VERSION_OPTIONS[number]
+
+export function version(str: string, targetVer: VersionOption | string): string {
+  if (!VERSION_OPTIONS.includes(targetVer as VersionOption))
+    return targetVer
+
   const versionArr = str.split('.').map(v => Number(v))
 
   if (versionArr.length !== 3)
@@ -12,5 +17,5 @@ export function version(str: string, options: VersionOption) {
     major: arr => [arr[0] + 1, 0, 0],
   }
 
-  return versionMap[options](versionArr).join('.')
+  return versionMap[targetVer](versionArr).join('.')
 }

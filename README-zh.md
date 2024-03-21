@@ -20,9 +20,12 @@
 
 ### 基本使用
 
-- `npx tauri-version patch` : `v0.0.2` -> `v0.0.3`
-- `npx tauri-version minor` : `v0.0.2` -> `v0.1.0`
-- `npx tauri-version major` : `v0.0.2` -> `v1.0.0`
+```sh
+$ npx tauri-version patch # `v0.0.2` -> `v0.0.3`
+$ npx tauri-version minor # `v0.0.2` -> `v0.1.0`
+$ npx tauri-version major # `v0.0.2` -> `v1.0.0`
+$ npx tauri-version 123 # `v0.0.2` -> `v123` - 自定义版本
+```
 
 ### 自定义提交信息
 
