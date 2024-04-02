@@ -27,10 +27,28 @@ $ npx tauri-version major # `v0.0.2` -> `v1.0.0` - Commit message `1.0.0`
 $ npx tauri-version 123 # `v0.0.2` -> `v123` - Customize version. commit message `123`
 ```
 
+Recommended to use `pnpx` to use the latest version of `tauri-version`.
+
+```sh
+$ pnpx tauri-version patch
+
+# Equal to:
+
+$ npx tauri-version@latest patch
+```
+
 ### Custom Commit Message
 
 `%s` in commit message will be replaced by version.
 
-`npx tauri-version patch -m "chore: release v%s"`
+`tauri-version patch -m "chore: release v%s"`
 This will change the commit message to:
 `chore: release v0.0.2`
+
+### Prevent `git commit`
+
+`tauri-version patch --no-git`
+
+### Options
+
+Use `tauri-version -h` to see the whole help message.

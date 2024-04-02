@@ -27,6 +27,16 @@ $ npx tauri-version major # `v0.0.2` -> `v1.0.0` - Commit message `1.0.0`
 $ npx tauri-version 123 # `v0.0.2` -> `v123` - 自定义版本。 commit message `123`
 ```
 
+推荐使用 `pnpx` 以运行最新版本的`tauri-version`。
+
+```sh
+$ pnpx tauri-version patch
+
+# 等价于:
+
+$ npx tauri-version@latest patch
+```
+
 ### 自定义commit message
 
 提交消息中的 `%s` 将会被替换为版本号。
@@ -34,3 +44,11 @@ $ npx tauri-version 123 # `v0.0.2` -> `v123` - 自定义版本。 commit message
 `npx tauri-version patch -m "chore: release v%s"`
 这将会将 commit message 改为：
 `chore: release v0.0.2`
+
+### 阻止 `git commit`
+
+`tauri-version patch --no-git`
+
+### 选项
+
+使用 `tauri-version -h` 以查看完整的帮助信息。
