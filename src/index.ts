@@ -1,22 +1,21 @@
-import * as process from 'node:process'
-import { resolve } from 'pathe'
-
 import { tomlParser } from '@core/tomlParser'
 import { type VersionOption, version } from '@core/version'
 import { io, isV1 } from '@core/io'
+import { toAbsolute } from '@core/utils'
 
 export * from '@core/version'
 export * from '@core/io'
 export * from '@core/tomlParser'
+export * from '@core/utils'
 
-export function tauriVersion(targetVer: VersionOption, base = process.cwd()) {
+export function tauriVersion(targetVer: VersionOption, base?: string) {
   const pathMap = {
     package: './package.json',
     cargo: './src-tauri/Cargo.toml',
     conf: './src-tauri/tauri.conf.json',
   }
 
-  const getPath = (path: string) => resolve(base, path)
+  const getPath = (path: string) => toAbsolute(path, base)
 
   /** IO START */
 

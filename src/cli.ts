@@ -1,13 +1,10 @@
 #!/usr/bin/env node
 
-import * as process from 'node:process'
 import { execSync } from 'node:child_process'
-import { resolve } from 'pathe'
-
 import { consola } from 'consola'
 import cac from 'cac'
 import { version as ver } from '../package.json'
-import { tauriVersion } from '.'
+import { tauriVersion, toAbsolute } from '.'
 
 const cli = cac('tauri-version')
 
@@ -34,23 +31,23 @@ cli
     { default: false },
   )
   .option(
-    '-t, --target <target>',
-    'The target version. Default is tauri version.',
+    '-b, --base <base>',
+    'The base path to the project. Default to the current working directory.',
   )
   .action((version, options) => {
     try {
       const {
         message = '%s',
         git,
-        target,
+        base,
       } = options
 
-      const ver = tauriVersion(version, target)
+      const ver = tauriVersion(version, base)
 
       if (!git)
         return consola.success(ver)
 
-      const getPath = (path: string) => resolve(process.cwd(), path)
+      const getPath = (path: string) => toAbsolute(path, base)
       const pathList = [
         './package.json',
         './src-tauri/tauri.conf.json',
