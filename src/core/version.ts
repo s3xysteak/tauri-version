@@ -3,13 +3,23 @@ const VERSION_OPTIONS = ['patch', 'minor', 'major'] as const
 export type VersionOption = typeof VERSION_OPTIONS[number]
 
 export function version(str: string, targetVer: VersionOption | string): string {
+  if (targetVer === undefined)
+    throw new Error('Missed version.')
+
   if (!VERSION_OPTIONS.includes(targetVer as VersionOption))
     return targetVer
 
-  const versionArr = str.split('.').map(v => Number(v))
+  let versionArr: number[]
+
+  try {
+    versionArr = str.split('.').map(v => Number(v))
+  }
+  catch (error) {
+    throw new Error('Invalid project version.')
+  }
 
   if (versionArr.length !== 3)
-    throw new Error('Invalid version')
+    throw new Error('Invalid project version.')
 
   const versionMap: Record<string, (arr: number[]) => number[]> = {
     patch: arr => [arr[0], arr[1], arr[2] + 1],
