@@ -1,5 +1,5 @@
 import * as process from 'node:process'
-import { join } from 'node:path'
+import { resolve } from 'pathe'
 
 import { tomlParser } from '@core/tomlParser'
 import { type VersionOption, version } from '@core/version'
@@ -9,25 +9,30 @@ export * from '@core/version'
 export * from '@core/io'
 export * from '@core/tomlParser'
 
-export function tauriVersion(targetVer: VersionOption, tauriPath = './src-tauri/', packagePath = './') {
-  const getPath = (path: string) =>
-    (fileName: string) => join(join(process.cwd(), path), fileName)
+export function tauriVersion(targetVer: VersionOption, base = process.cwd()) {
+  const pathMap = {
+    package: './package.json',
+    cargo: './src-tauri/Cargo.toml',
+    conf: './src-tauri/tauri.conf.json',
+  }
+
+  const getPath = (path: string) => resolve(base, path)
 
   /** IO START */
 
   /** package.json */
-  const packageIO = io(getPath(packagePath)('package.json'))
+  const packageIO = io(getPath(pathMap.package))
   const packageObj = JSON.parse(packageIO.read())
   const ver = version(packageObj.version, targetVer)
   packageObj.version = ver
   packageIO.write(JSON.stringify(packageObj, null, 2))
 
   /** Cargo */
-  const tomlIO = io(getPath(tauriPath)('Cargo.toml'))
+  const tomlIO = io(getPath(pathMap.cargo))
   tomlIO.write(tomlParser(tomlIO.read(), ver))
 
   /** Conf */
-  const confIO = io(getPath(tauriPath)('tauri.conf.json'))
+  const confIO = io(getPath(pathMap.conf))
   const confObj = JSON.parse(confIO.read())
 
   if (isV1(confObj))
