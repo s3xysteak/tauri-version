@@ -12,7 +12,7 @@ import { tauriVersion } from '.'
 const cli = cac('tauri-version')
 
 const tip
-  = 'Accept <patch|minor|major>. Increment the version by the specified level.'
+  = 'Accept <patch|minor|major|any-custom-version>. Increment the version by the specified level.'
 
 cli.version(ver).option('[patch|minor|major]', tip).help()
 
@@ -42,9 +42,10 @@ cli
       const {
         message = '%s',
         git,
+        target,
       } = options
 
-      const ver = tauriVersion(version)
+      const ver = tauriVersion(version, target)
 
       if (!git)
         return consola.success(ver)
