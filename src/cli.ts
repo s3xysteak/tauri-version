@@ -21,14 +21,14 @@ cli
     { default: '\"%s\"' },
   )
   .option(
-    '--git',
-    'Commit and tag the version. Always be opposite of --no-git.',
-    { default: true },
-  )
-  .option(
     '--no-git',
     'Do not commit and tag the version. Always be opposite of --git.',
     { default: false },
+  )
+  .option(
+    '--git [git]',
+    'Commit and tag the version. Always be opposite of --no-git.',
+    { default: true },
   )
   .option(
     '-b, --base <base>',
