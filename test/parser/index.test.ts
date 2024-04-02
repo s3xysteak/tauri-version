@@ -1,6 +1,6 @@
-import { join } from 'node:path'
 import { URL, fileURLToPath } from 'node:url'
 import { readFileSync, writeFileSync } from 'node:fs'
+import { resolve } from 'pathe'
 import { describe, expect, it } from 'vitest'
 
 import {
@@ -22,12 +22,12 @@ describe('tomlParser', () => {
   it('tomlParser', () => {
     const base = fileURLToPath(new URL('./', import.meta.url))
 
-    const content = readFileSync(join(base, './files/raw.toml'), 'utf-8')
+    const content = readFileSync(resolve(base, './files/raw.toml'), 'utf-8')
     const val = tomlParser(content, '0.0.5')
-    writeFileSync(join(base, './files/patch.toml'), val)
+    writeFileSync(resolve(base, './files/patch.toml'), val)
 
-    expect(readFileSync(join(base, './files/patch.toml'), 'utf-8')).toBe(
-      readFileSync(join(base, './files/patch-target.toml'), 'utf-8'),
+    expect(readFileSync(resolve(base, './files/patch.toml'), 'utf-8')).toBe(
+      readFileSync(resolve(base, './files/patch-target.toml'), 'utf-8'),
     )
   })
 })

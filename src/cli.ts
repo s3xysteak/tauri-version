@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 
 import * as process from 'node:process'
-import { join } from 'node:path'
 import { execSync } from 'node:child_process'
+import { resolve } from 'pathe'
 
 import { consola } from 'consola'
 import cac from 'cac'
@@ -49,7 +49,7 @@ cli
       if (!git)
         return consola.success(ver)
 
-      const getPath = (path: string) => join(process.cwd(), path)
+      const getPath = (path: string) => resolve(process.cwd(), path)
       const pathList = [
         './package.json',
         './src-tauri/tauri.conf.json',

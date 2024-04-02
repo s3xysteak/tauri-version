@@ -1,6 +1,6 @@
 import { URL, fileURLToPath } from 'node:url'
-import { join } from 'node:path'
 import { copyFileSync, readFileSync } from 'node:fs'
+import { resolve } from 'pathe'
 import { describe, expect, it } from 'vitest'
 import { io, isV1 } from '@core/io'
 
@@ -31,11 +31,11 @@ describe('io', () => {
 
   it('io', () => {
     const base = fileURLToPath(new URL('./', import.meta.url))
-    copyFileSync(join(base, './raw.txt'), join(base, './lab.txt'))
-    const rawContent = readFileSync(join(base, './raw.txt'), 'utf-8')
-    const targetContent = readFileSync(join(base, './target.txt'), 'utf-8')
+    copyFileSync(resolve(base, './raw.txt'), resolve(base, './lab.txt'))
+    const rawContent = readFileSync(resolve(base, './raw.txt'), 'utf-8')
+    const targetContent = readFileSync(resolve(base, './target.txt'), 'utf-8')
 
-    const IO = io(join(base, './lab.txt'))
+    const IO = io(resolve(base, './lab.txt'))
     const content = IO.read()
     expect(content).toBe(rawContent)
 
