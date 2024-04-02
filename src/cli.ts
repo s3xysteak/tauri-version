@@ -21,11 +21,33 @@ cli
   .option(
     '-m, --message <message>',
     'Commit message. Use %s to replace the version number.',
+    { default: '\"%s\"' },
+  )
+  .option(
+    '--git',
+    'Commit and tag the version. Always be opposite of --no-git.',
+    { default: true },
+  )
+  .option(
+    '--no-git',
+    'Do not commit and tag the version. Always be opposite of --git.',
+    { default: false },
+  )
+  .option(
+    '-t, --target <target>',
+    'The target version. Default is tauri version.',
   )
   .action((version, options) => {
     try {
-      const { message = '%s' } = options
+      const {
+        message = '%s',
+        git,
+      } = options
+
       const ver = tauriVersion(version)
+
+      if (!git)
+        return consola.success(ver)
 
       const getPath = (path: string) => join(process.cwd(), path)
       const pathList = [
