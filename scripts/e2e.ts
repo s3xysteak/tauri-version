@@ -17,6 +17,8 @@ for (const key of Object.keys(raw)) {
 
 consola.success('e2e pass.')
 
+/** End */
+
 function getTomlVersion(content: string) {
   const packageEndIndex = findSubStringEndIndex(content, '[package]')
 
