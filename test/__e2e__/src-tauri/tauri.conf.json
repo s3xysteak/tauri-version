@@ -1,6 +1,6 @@
 {
   "productName": "__e2e__",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "identifier": "com.tauri.dev",
   "build": {
     "beforeDevCommand": "pnpm dev",

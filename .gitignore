@@ -1,3 +1,5 @@
+test/__e2e__/src-tauri/target
+
 # Logs
 logs
 *.log
