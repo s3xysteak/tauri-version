@@ -25,6 +25,9 @@
     "skipLibCheck": true
 
   },
-  "include": ["src", "test", "scripts", "vite.config.ts"],
-  "exclude": ["*.md"]
+  "exclude": [
+    "**/node_modules/**",
+    "**/dist/**",
+    "test/__e2e__/**"
+  ]
 }

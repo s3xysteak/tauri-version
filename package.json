@@ -32,8 +32,9 @@
     "build": "tsc && unbuild",
     "build-only": "unbuild",
     "test": "vitest",
-    "test-once": "vitest run",
-    "release": "esno ./scripts/release.ts",
+    "test-once": "vitest run && pnpm e2e",
+    "e2e": "esno ./scripts/e2e.ts",
+    "release": "tsc && pnpm test-once && esno ./scripts/release.ts",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix"
   },
