@@ -18,8 +18,6 @@
 
 假设当前版本为`v0.0.2`：
 
-### 基本使用
-
 ```sh
 $ npx tauri-version patch # `v0.0.2` -> `v0.0.3` - Commit message `0.0.3`
 $ npx tauri-version minor # `v0.0.2` -> `v0.1.0` - Commit message `0.1.0`
@@ -37,6 +35,10 @@ $ pnpx tauri-version patch
 $ npx tauri-version@latest patch
 ```
 
+## 选项
+
+使用 `tauri-version -h` 以查看完整的帮助信息。
+
 ### 自定义commit message
 
 提交消息中的 `%s` 将会被替换为版本号。
@@ -49,6 +51,8 @@ $ npx tauri-version@latest patch
 
 `tauri-version patch --no-git`
 
-### 选项
+### 不等待 `Cargo.lock` 更新
 
-使用 `tauri-version -h` 以查看完整的帮助信息。
+修改了 `Cargo.toml` 中的版本会导致 `Cargo.lock` 中对应版本号更新。默认情况，`tauri-version` 会等待 `Cargo.lock` 更新后在进行 `git commit` 。
+
+使用 `tauri-version patch --no-lock` 。阻止这样的行为。

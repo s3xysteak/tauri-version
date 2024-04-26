@@ -18,8 +18,6 @@ Commit these changes and label the commit with a tag named `v[version number]`.
 
 If the current version is `v0.0.2`:
 
-### Basic Usage
-
 ```sh
 $ npx tauri-version patch # `v0.0.2` -> `v0.0.3` - Commit message `0.0.3`
 $ npx tauri-version minor # `v0.0.2` -> `v0.1.0` - Commit message `0.1.0`
@@ -37,6 +35,10 @@ $ pnpx tauri-version patch
 $ npx tauri-version@latest patch
 ```
 
+## Options
+
+Use `tauri-version -h` to see the whole help message.
+
 ### Custom Commit Message
 
 `%s` in commit message will be replaced by version.
@@ -49,6 +51,8 @@ This will change the commit message to:
 
 `tauri-version patch --no-git`
 
-### Options
+### Do not wait for the update of `Cargo.lock`
 
-Use `tauri-version -h` to see the whole help message.
+Change the version in `Cargo.toml` will change the version in `Cargo.lock` automatically. In default, `tauri-version` will wait for the update of `Cargo.lock` then `git commit`.
+
+To prevent it, use `tauri-version patch --no-lock`.
