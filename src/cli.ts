@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 
+import { watch as fsWatch } from 'node:fs'
 import { execSync } from 'node:child_process'
 import { consola } from 'consola'
 import cac from 'cac'
@@ -34,25 +35,39 @@ cli
     '-b, --base <base>',
     'The base path to the project. Default to the current working directory.',
   )
-  .action((version, options) => {
+  .option(
+    '--no-lock',
+    'Do not wait for the lock file.',
+    { default: false },
+  )
+  .option(
+    '--lock [lock]',
+    'Wait for the lock file.',
+    { default: true },
+  )
+  .action(async (version, options) => {
     try {
       const {
         message = '%s',
         git,
         base,
+        lock,
       } = options
 
+      const getPath = (path: string) => toAbsolute(path, base)
+
       const ver = tauriVersion(version, base)
+      lock && await waitForLock(getPath('./src-tauri/Cargo.lock'))
 
       if (!git)
         return consola.success(ver)
 
-      const getPath = (path: string) => toAbsolute(path, base)
       const pathList = [
         './package.json',
         './src-tauri/tauri.conf.json',
         './src-tauri/Cargo.toml',
       ]
+      lock && pathList.push('./src-tauri/Cargo.lock')
       execSync(`git add ${pathList.map(path => getPath(path)).join(' ')}`)
 
       const parsedMessage = message.replace('%s', ver)
@@ -67,3 +82,15 @@ cli
   })
 
 cli.parse()
+
+function waitForLock(path: string) {
+  return new Promise<void>((resolve) => {
+    const watcher = fsWatch(path, (e) => {
+      if (e !== 'change')
+        return
+
+      watcher.close()
+      resolve()
+    })
+  })
+}
