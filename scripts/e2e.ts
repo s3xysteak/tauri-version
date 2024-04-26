@@ -4,24 +4,46 @@ import { consola } from 'consola'
 import { findSubStringEndIndex } from '@/core/tomlParser'
 import { version } from '@/core/version'
 
-const raw = await getVersions()
+let rawContent: {
+  package: string[]
+  tauriConf: string[]
+  toml: string[]
+  lock: string[]
+}
 
-setTimeout(() => {
-  exec('cd ./test/__e2e__/src-tauri && cargo run')
-}, 1000)
+await e2e()
+await e2eReset()
 
-exec('esno ./src/cli.ts patch -b "test/__e2e__" --no-git', async () => {
-  const after = await getVersions()
+async function e2e() {
+  const raw = await getVersions()
+  rawContent = raw.contents
 
-  for (const key of Object.keys(raw)) {
-    if (version(raw[key], 'patch') !== after[key])
-      throw new Error(`Version ${key} is not the expected value.`)
-  }
+  return new Promise<void>((resolve) => {
+    setTimeout(() => {
+      exec('cd ./test/__e2e__/src-tauri && cargo run')
+    }, 1000)
 
-  consola.success('e2e pass.')
-})
+    exec('esno ./src/cli.ts patch -b "test/__e2e__" --no-git', async () => {
+      const after = await getVersions()
 
-/** End */
+      for (const key of objectKeys(raw.versions)) {
+        if (version(raw.versions[key], 'patch') !== after.versions[key])
+          throw new Error(`Version ${key} is not the expected value.`)
+      }
+
+      consola.success('e2e pass.')
+      resolve()
+
+      /** End */
+    })
+  })
+}
+async function e2eReset() {
+  for (const [path, content] of Object.values(rawContent))
+    await fs.writeFile(path, content, 'utf-8')
+
+  /** End */
+}
 
 function getTomlVersion(content: string) {
   const packageEndIndex = findSubStringEndIndex(content, 'name = "__e2e__"')
@@ -37,16 +59,34 @@ function getTomlVersion(content: string) {
 
   return content.substring(firstQuoteIndex + 1, secondQuoteIndex)
 }
-async function getVersions(): Promise<Record<string, string>> {
-  const packageContent = await fs.readFile('test/__e2e__/package.json', 'utf-8')
-  const tauriConf = await fs.readFile('test/__e2e__/src-tauri/tauri.conf.json', 'utf-8')
-  const toml = await fs.readFile('test/__e2e__/src-tauri/Cargo.toml', 'utf-8')
-  const lock = await fs.readFile('test/__e2e__/src-tauri/Cargo.lock', 'utf-8')
+async function getVersions() {
+  const packagePath = 'test/__e2e__/package.json'
+  const packageContent = await fs.readFile(packagePath, 'utf-8')
+
+  const tauriConfPath = 'test/__e2e__/src-tauri/tauri.conf.json'
+  const tauriConf = await fs.readFile(tauriConfPath, 'utf-8')
+
+  const tomlPath = 'test/__e2e__/src-tauri/Cargo.toml'
+  const toml = await fs.readFile(tomlPath, 'utf-8')
+
+  const lockPath = 'test/__e2e__/src-tauri/Cargo.lock'
+  const lock = await fs.readFile(lockPath, 'utf-8')
 
   return {
-    package: JSON.parse(packageContent).version,
-    tauriConf: JSON.parse(tauriConf).version,
-    toml: getTomlVersion(toml),
-    lock: getTomlVersion(lock),
+    versions: {
+      package: JSON.parse(packageContent).version,
+      tauriConf: JSON.parse(tauriConf).version,
+      toml: getTomlVersion(toml),
+      lock: getTomlVersion(lock),
+    },
+    contents: {
+      package: [packagePath, packageContent],
+      tauriConf: [tauriConfPath, tauriConf],
+      toml: [tomlPath, toml],
+      lock: [lockPath, lock],
+    },
   }
+}
+function objectKeys<T extends object>(obj: T) {
+  return Object.keys(obj) as (keyof T)[]
 }

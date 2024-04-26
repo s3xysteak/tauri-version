@@ -1,6 +1,6 @@
 [package]
 name = "__e2e__"
-version = "0.0.20"
+version = "0.0.1"
 description = "A Tauri App"
 authors = ["s3xysteak"]
 edition = "2021"
