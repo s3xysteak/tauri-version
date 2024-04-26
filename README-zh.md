@@ -14,7 +14,7 @@
 
 提交这些更改，并为提交打上一个名为 `v[版本号]` 的tag。
 
-## :wrench: 使用
+## :memo: 使用
 
 假设当前版本为`v0.0.2`：
 
@@ -35,7 +35,7 @@ $ pnpx tauri-version patch
 $ npx tauri-version@latest patch
 ```
 
-## 选项
+## :wrench: 选项
 
 使用 `tauri-version -h` 以查看完整的帮助信息。
 

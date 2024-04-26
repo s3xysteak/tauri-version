@@ -14,7 +14,7 @@ Automatically update the version number in the following files:
 
 Commit these changes and label the commit with a tag named `v[version number]`.
 
-## :wrench: Usage
+## :memo: Usage
 
 If the current version is `v0.0.2`:
 
@@ -35,7 +35,7 @@ $ pnpx tauri-version patch
 $ npx tauri-version@latest patch
 ```
 
-## Options
+## :wrench: Options
 
 Use `tauri-version -h` to see the whole help message.
 
