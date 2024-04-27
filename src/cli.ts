@@ -57,7 +57,12 @@ cli
       const getPath = (path: string) => toAbsolute(path, base)
 
       const ver = tauriVersion(version, base)
+
+      const timer = setTimeout(() => {
+        consola.info('It has been waiting a long time for the `Cargo.lock` update. Maybe you wanna try the option `--no-lock`?')
+      }, 3000)
       lock && await waitForLock(getPath('./src-tauri/Cargo.lock'))
+      clearTimeout(timer)
 
       if (!git)
         return consola.success(ver)

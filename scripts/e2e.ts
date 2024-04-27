@@ -1,3 +1,4 @@
+import process from 'node:process'
 import { promises as fs } from 'node:fs'
 import { exec } from 'node:child_process'
 import { consola } from 'consola'
@@ -23,7 +24,7 @@ async function e2e() {
       exec('cd ./test/__e2e__/src-tauri && cargo run')
     }, 1000)
 
-    exec('esno ./src/cli.ts patch -b "test/__e2e__" --no-git', async () => {
+    const child = exec('esno ./src/cli.ts patch -b "test/__e2e__" --no-git', async () => {
       const after = await getVersions()
 
       for (const key of objectKeys(raw.versions)) {
@@ -36,6 +37,7 @@ async function e2e() {
 
       /** End */
     })
+    child.stdout?.pipe(process.stdout)
   })
 }
 async function e2eReset() {
