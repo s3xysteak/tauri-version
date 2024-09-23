@@ -31,9 +31,9 @@
   ],
   "scripts": {
     "build": "tsc && unbuild",
-    "build-only": "unbuild",
+    "build:only": "unbuild",
     "test": "vitest",
-    "test-once": "vitest run && pnpm e2e",
+    "test:once": "vitest run && pnpm e2e",
     "e2e": "esno ./scripts/e2e.ts",
     "release": "tsc && pnpm test-once && bumpp",
     "publish:ci": "pnpm publish --access public --no-git-checks",
@@ -46,13 +46,13 @@
     "pathe": "^1.1.2"
   },
   "devDependencies": {
-    "@antfu/eslint-config": "^2.11.6",
+    "@antfu/eslint-config": "^3.7.1",
     "@tsconfig/node20": "^20.1.4",
-    "@types/node": "^20.12.2",
+    "@types/node": "^22.5.5",
     "bumpp": "^9.5.2",
-    "eslint": "^8.57.0",
-    "typescript": "^5.4.3",
+    "eslint": "^9.11.0",
+    "typescript": "^5.5.4",
     "unbuild": "^2.0.0",
-    "vitest": "^1.4.0"
+    "vitest": "^2.1.1"
   }
 }
