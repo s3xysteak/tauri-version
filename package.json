@@ -3,6 +3,7 @@
   "type": "module",
   "version": "0.4.1",
   "private": false,
+  "packageManager": "pnpm@9.11.0",
   "description": "Update version for tauri-app.",
   "license": "MIT",
   "repository": {
@@ -34,7 +35,8 @@
     "test": "vitest",
     "test-once": "vitest run && pnpm e2e",
     "e2e": "esno ./scripts/e2e.ts",
-    "release": "tsc && pnpm test-once && esno ./scripts/release.ts",
+    "release": "tsc && pnpm test-once && bumpp",
+    "publish:ci": "pnpm publish --access public --no-git-checks",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix"
   },
@@ -47,6 +49,7 @@
     "@antfu/eslint-config": "^2.11.6",
     "@tsconfig/node20": "^20.1.4",
     "@types/node": "^20.12.2",
+    "bumpp": "^9.5.2",
     "eslint": "^8.57.0",
     "typescript": "^5.4.3",
     "unbuild": "^2.0.0",
