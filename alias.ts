@@ -1,4 +1,4 @@
-import { URL, fileURLToPath } from 'node:url'
+import { fileURLToPath, URL } from 'node:url'
 
 export default r({
   '@': './src',

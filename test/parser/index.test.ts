@@ -1,13 +1,13 @@
-import { URL, fileURLToPath } from 'node:url'
 import { readFileSync, writeFileSync } from 'node:fs'
-import { resolve } from 'pathe'
-import { describe, expect, it } from 'vitest'
-
+import { fileURLToPath, URL } from 'node:url'
 import {
   findSubStringEndIndex,
   replaceSubstring,
   tomlParser,
 } from '@core/tomlParser'
+import { resolve } from 'pathe'
+
+import { describe, expect, it } from 'vitest'
 
 describe('tomlParser', () => {
   it('replaceSubstring', () => {

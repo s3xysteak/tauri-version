@@ -1,6 +1,6 @@
-import { describe, expect, it } from 'vitest'
-import { normalize } from 'pathe'
 import { toAbsolute } from '@core/utils'
+import { normalize } from 'pathe'
+import { describe, expect, it } from 'vitest'
 
 describe('toAbsolute', () => {
   it('should work', () => {

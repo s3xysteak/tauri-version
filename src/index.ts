@@ -1,12 +1,12 @@
-import { tomlParser } from '@core/tomlParser'
-import { type VersionOption, version } from '@core/version'
 import { io, isV1 } from '@core/io'
+import { tomlParser } from '@core/tomlParser'
 import { toAbsolute } from '@core/utils'
+import { version, type VersionOption } from '@core/version'
 
-export * from '@core/version'
 export * from '@core/io'
 export * from '@core/tomlParser'
 export * from '@core/utils'
+export * from '@core/version'
 
 export function tauriVersion(targetVer: VersionOption, base?: string) {
   const pathMap = {

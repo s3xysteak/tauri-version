@@ -1,9 +1,9 @@
-import process from 'node:process'
-import { promises as fs } from 'node:fs'
 import { exec } from 'node:child_process'
-import { consola } from 'consola'
+import { promises as fs } from 'node:fs'
+import process from 'node:process'
 import { findSubStringEndIndex } from '@/core/tomlParser'
 import { version } from '@/core/version'
+import { consola } from 'consola'
 
 let rawContent: {
   package: string[]

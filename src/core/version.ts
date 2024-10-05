@@ -14,7 +14,7 @@ export function version(str: string, targetVer: VersionOption | string): string 
   try {
     versionArr = str.split('.').map(v => Number(v))
   }
-  catch (error) {
+  catch {
     throw new Error('Invalid project version.')
   }
 

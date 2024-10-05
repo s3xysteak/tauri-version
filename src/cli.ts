@@ -1,11 +1,11 @@
 #!/usr/bin/env node
 
-import { watch as fsWatch } from 'node:fs'
 import { execSync } from 'node:child_process'
-import { consola } from 'consola'
+import { watch as fsWatch } from 'node:fs'
 import cac from 'cac'
-import { version as ver } from '../package.json'
+import { consola } from 'consola'
 import { tauriVersion, toAbsolute } from '.'
+import { version as ver } from '../package.json'
 
 const cli = cac('tauri-version')
 
