@@ -32,6 +32,10 @@ cli
     { default: true },
   )
   .option(
+    '--sign [sign]',
+    'Sign the tag with a GPG/SSH key',
+  )
+  .option(
     '-b, --base <base>',
     'The base path to the project. Default to the current working directory.',
   )
@@ -52,6 +56,7 @@ cli
         git,
         base,
         lock,
+        sign = false,
       } = options
 
       const getPath = (path: string) => toAbsolute(path, base)
@@ -77,7 +82,7 @@ cli
 
       const parsedMessage = message.replace('%s', ver)
       execSync(`git commit -m "${parsedMessage}"`)
-      execSync(`git tag --annotate --message="${parsedMessage}" v${ver}`)
+      execSync(`git tag --annotate --message="${parsedMessage}" v${ver}${sign ? ' --sign' : ''}`)
 
       consola.success(`v${ver}`)
     }
