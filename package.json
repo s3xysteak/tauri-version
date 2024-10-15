@@ -30,6 +30,7 @@
     "dist"
   ],
   "scripts": {
+    "dev": "unbuild --stub",
     "build": "tsc && unbuild",
     "build:only": "unbuild",
     "test": "vitest",
