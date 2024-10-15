@@ -77,7 +77,7 @@ cli
 
       const parsedMessage = message.replace('%s', ver)
       execSync(`git commit -m "${parsedMessage}"`)
-      execSync(`git tag v${ver}`)
+      execSync(`git tag --annotate --message="${parsedMessage}" v${ver}`)
 
       consola.success(`v${ver}`)
     }
