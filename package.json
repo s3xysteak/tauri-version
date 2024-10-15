@@ -36,7 +36,7 @@
     "test": "vitest",
     "test:once": "vitest run && pnpm e2e",
     "e2e": "esno ./scripts/e2e.ts",
-    "release": "tsc && pnpm test-once && bumpp",
+    "release": "tsc && pnpm test:once && bumpp",
     "publish:ci": "pnpm publish --access public --no-git-checks",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix"
