@@ -49,15 +49,16 @@ export function tauriVersion(targetVer: VersionOption, base?: string) {
 export function getCurrentVersion(base?: string) {
   const versions = getTauriVersions(base)
 
-  if (versions.package !== versions.cargo ||
-    versions.package !== versions.conf ||
-    versions.cargo !== versions.conf)
+  if (versions.package !== versions.cargo
+    || versions.package !== versions.conf
+    || versions.cargo !== versions.conf) {
     throw new Error(
-      'Version mismatch detected between ' +
-      `package.json (${versions.package}), ` +
-      `Cargo.toml (${versions.cargo}) and ` +
-      `tauri.conf.json (${versions.conf})`
+      'Version mismatch detected between '
+      + `package.json (${versions.package}), `
+      + `Cargo.toml (${versions.cargo}) and `
+      + `tauri.conf.json (${versions.conf})`,
     )
+  }
 
   return versions.package
 }
@@ -77,7 +78,7 @@ function getTauriVersions(base?: string) {
     conf: (() => {
       const conf = JSON.parse(io(getPath(pathMap.conf)).read())
       return isV1(conf) ? conf.package.version : conf.version
-    })()
+    })(),
   }
 
   return versions
