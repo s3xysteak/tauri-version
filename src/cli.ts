@@ -12,16 +12,6 @@ const cli = cac('tauri-version')
 const tip
   = 'Accept <patch|minor|major|any-custom-version>. Increment the version by the specified level.'
 
-cli.command('', 'Print the current version.')
-  .action(() => {
-    try {
-      console.log(getCurrentVersion())
-    }
-    catch (error) {
-      consola.error(String(error))
-    }
-  })
-
 cli.version(ver).option('[patch|minor|major]', tip).help()
 
 cli
@@ -68,6 +58,11 @@ cli
         lock,
         sign = false,
       } = options
+
+      if (!version) {
+        console.log(getCurrentVersion(base))
+        return
+      }
 
       const getPath = (path: string) => toAbsolute(path, base)
 
