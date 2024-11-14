@@ -14,6 +14,8 @@ let rawContent: {
 
 await e2e()
 await e2eReset()
+await e2eVersionCheck()
+await e2eReset()
 
 async function e2e() {
   const raw = await getVersions()
@@ -36,6 +38,19 @@ async function e2e() {
       resolve()
 
       /** End */
+    })
+    child.stdout?.pipe(process.stdout)
+  })
+}
+async function e2eVersionCheck() {
+  return new Promise<void>((resolve) => {
+    const child = exec('esno ./src/cli.ts -b "test/__e2e__"', async () => {
+      const raw = await getVersions()
+      if (raw.versions.package !== '0.0.1')
+        throw new Error('Version check failed')
+
+      consola.success('e2e version check pass.')
+      resolve()
     })
     child.stdout?.pipe(process.stdout)
   })
