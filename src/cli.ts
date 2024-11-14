@@ -4,13 +4,23 @@ import { execSync } from 'node:child_process'
 import { watch as fsWatch } from 'node:fs'
 import cac from 'cac'
 import { consola } from 'consola'
-import { tauriVersion, toAbsolute } from '.'
+import { getCurrentVersion, tauriVersion, toAbsolute } from '.'
 import { version as ver } from '../package.json'
 
 const cli = cac('tauri-version')
 
 const tip
   = 'Accept <patch|minor|major|any-custom-version>. Increment the version by the specified level.'
+
+cli.command('', 'Print the current version.')
+  .action(() => {
+    try {
+      console.log(getCurrentVersion())
+    }
+    catch (error) {
+      consola.error(String(error))
+    }
+  })
 
 cli.version(ver).option('[patch|minor|major]', tip).help()
 

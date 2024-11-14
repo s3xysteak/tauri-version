@@ -45,3 +45,40 @@ export function tauriVersion(targetVer: VersionOption, base?: string) {
 
   return ver
 }
+
+export function getCurrentVersion(base?: string) {
+  const versions = getTauriVersions(base)
+
+  if (versions.package !== versions.cargo ||
+    versions.package !== versions.conf ||
+    versions.cargo !== versions.conf)
+    throw new Error(
+      'Version mismatch detected between ' +
+      `package.json (${versions.package}), ` +
+      `Cargo.toml (${versions.cargo}) and ` +
+      `tauri.conf.json (${versions.conf})`
+    )
+
+  return versions.package
+}
+
+function getTauriVersions(base?: string) {
+  const pathMap = {
+    package: './package.json',
+    cargo: './src-tauri/Cargo.toml',
+    conf: './src-tauri/tauri.conf.json',
+  }
+
+  const getPath = (path: string) => toAbsolute(path, base)
+
+  const versions = {
+    package: JSON.parse(io(getPath(pathMap.package)).read()).version,
+    cargo: io(getPath(pathMap.cargo)).read().match(/version\s*=\s*"([^"]+)"/)?.[1] || '',
+    conf: (() => {
+      const conf = JSON.parse(io(getPath(pathMap.conf)).read())
+      return isV1(conf) ? conf.package.version : conf.version
+    })()
+  }
+
+  return versions
+}
