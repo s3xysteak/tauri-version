@@ -39,6 +39,10 @@ $ npx tauri-version@latest patch
 
 使用 `tauri-version -h` 以查看完整的帮助信息。
 
+### 获取当前版本
+
+`tauri-version`
+
 ### 自定义commit message
 
 提交消息中的 `%s` 将会被替换为版本号。
