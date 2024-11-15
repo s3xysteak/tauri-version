@@ -4,15 +4,15 @@ import { execSync } from 'node:child_process'
 import { watch as fsWatch } from 'node:fs'
 import cac from 'cac'
 import { consola } from 'consola'
-import { getCurrentVersion, tauriVersion, toAbsolute } from '.'
-import { version as ver } from '../package.json'
+import { createContext, getCurrentVersion, toAbsolute } from '.'
+import { version as pkgVersion } from '../package.json'
 
 const cli = cac('tauri-version')
 
 const tip
   = 'Accept <patch|minor|major|any-custom-version>. Increment the version by the specified level.'
 
-cli.version(ver).option('[patch|minor|major]', tip).help()
+cli.version(pkgVersion).option('[patch|minor|major]', tip).help()
 
 cli
   .command('[version]', tip)
@@ -59,14 +59,19 @@ cli
         sign = false,
       } = options
 
+      const getPath = (path: string) => toAbsolute(path, base)
+
       if (!version) {
-        console.log(getCurrentVersion(base))
+        console.log(
+          getCurrentVersion(createContext('patch', base)),
+        )
         return
       }
 
-      const getPath = (path: string) => toAbsolute(path, base)
-
-      const ver = tauriVersion(version, base)
+      const ctx = createContext(version, base)
+      ctx.conf.write()
+      ctx.package.write()
+      ctx.toml.write()
 
       const timer = setTimeout(() => {
         consola.info('It has been waiting a long time for the `Cargo.lock` update. Maybe you wanna try the option `--no-lock`?')
@@ -75,7 +80,7 @@ cli
       clearTimeout(timer)
 
       if (!git)
-        return consola.success(ver)
+        return consola.success(ctx.version)
 
       const pathList = [
         './package.json',
@@ -85,11 +90,11 @@ cli
       lock && pathList.push('./src-tauri/Cargo.lock')
       execSync(`git add ${pathList.map(path => getPath(path)).join(' ')}`)
 
-      const parsedMessage = message.replace('%s', ver)
+      const parsedMessage = message.replace('%s', ctx.version)
       execSync(`git commit -m "${parsedMessage}"`)
-      execSync(`git tag --annotate --message="${parsedMessage}" v${ver}${sign ? ' --sign' : ''}`)
+      execSync(`git tag --annotate --message="${parsedMessage}" v${ctx.version}${sign ? ' --sign' : ''}`)
 
-      consola.success(`v${ver}`)
+      consola.success(`v${ctx.version}`)
     }
     catch (error) {
       consola.error(String(error))
