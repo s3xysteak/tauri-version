@@ -63,7 +63,7 @@ cli
 
       if (!version) {
         console.log(
-          getCurrentVersion(createContext('patch', base)),
+          getCurrentVersion(createContext(undefined, base)),
         )
         return
       }
@@ -80,7 +80,7 @@ cli
       clearTimeout(timer)
 
       if (!git)
-        return consola.success(ctx.version)
+        return consola.success(ctx.version())
 
       const pathList = [
         './package.json',
@@ -90,11 +90,11 @@ cli
       lock && pathList.push('./src-tauri/Cargo.lock')
       execSync(`git add ${pathList.map(path => getPath(path)).join(' ')}`)
 
-      const parsedMessage = message.replace('%s', ctx.version)
+      const parsedMessage = message.replace('%s', ctx.version())
       execSync(`git commit -m "${parsedMessage}"`)
-      execSync(`git tag --annotate --message="${parsedMessage}" v${ctx.version}${sign ? ' --sign' : ''}`)
+      execSync(`git tag --annotate --message="${parsedMessage}" v${ctx.version()}${sign ? ' --sign' : ''}`)
 
-      consola.success(`v${ctx.version}`)
+      consola.success(`v${ctx.version()}`)
     }
     catch (error) {
       consola.error(String(error))

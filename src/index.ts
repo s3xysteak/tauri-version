@@ -10,7 +10,7 @@ export * from '@core/version'
 
 export type Context = ReturnType<typeof createContext>
 
-export function createContext(targetVer: VersionOption, base?: string) {
+export function createContext(targetVer?: VersionOption, base?: string) {
   const pathMap = {
     package: './package.json',
     cargo: './src-tauri/Cargo.toml',
@@ -24,7 +24,6 @@ export function createContext(targetVer: VersionOption, base?: string) {
   /** package.json */
   const packageIO = io(getPath(pathMap.package))
   const packageObj = JSON.parse(packageIO.read())
-  const ver = version(packageObj.version, targetVer)
 
   /** Cargo */
   const tomlIO = io(getPath(pathMap.cargo))
@@ -36,13 +35,20 @@ export function createContext(targetVer: VersionOption, base?: string) {
 
   /** IO END */
 
+  let _ver: string
+  const ver = () => {
+    if (!targetVer)
+      throw new Error('Must indicate target version')
+    return _ver || (_ver = version(packageObj.version, targetVer))
+  }
+
   return {
     version: ver,
     package: {
       read: () => readOnly(packageObj),
       write: () => {
         const obj = { ...packageObj }
-        obj.version = ver
+        obj.version = ver()
         packageIO.write(JSON.stringify(obj, null, 2))
       },
     },
@@ -50,7 +56,7 @@ export function createContext(targetVer: VersionOption, base?: string) {
       read: () => ({
         beforeVersion: getCargoVersion(tomlContent),
       }),
-      write: () => tomlIO.write(replaceTomlVersion(tomlContent, ver)),
+      write: () => tomlIO.write(replaceTomlVersion(tomlContent, ver())),
     },
     conf: {
       read: () => readOnly(confObj),
@@ -58,9 +64,9 @@ export function createContext(targetVer: VersionOption, base?: string) {
         const obj = { ...confObj }
 
         if (isV1(obj))
-          obj.package.version = ver
+          obj.package.version = ver()
         else
-          obj.version = ver
+          obj.version = ver()
 
         confIO.write(JSON.stringify(obj, null, 2))
       },
