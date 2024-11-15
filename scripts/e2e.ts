@@ -1,8 +1,8 @@
 import { exec } from 'node:child_process'
 import { promises as fs } from 'node:fs'
 import process from 'node:process'
-import { findSubStringEndIndex } from '@/core/tomlParser'
 import { version } from '@/core/version'
+import { getCargoVersion } from '@/index'
 import { consola } from 'consola'
 
 let rawContent: {
@@ -13,6 +13,8 @@ let rawContent: {
 }
 
 await e2e()
+await e2eReset()
+await e2eVersionCheck()
 await e2eReset()
 
 async function e2e() {
@@ -40,6 +42,19 @@ async function e2e() {
     child.stdout?.pipe(process.stdout)
   })
 }
+async function e2eVersionCheck() {
+  return new Promise<void>((resolve) => {
+    const child = exec('esno ./src/cli.ts -b "test/__e2e__"', async () => {
+      const raw = await getVersions()
+      if (raw.versions.package !== '0.0.1')
+        throw new Error('Version check failed')
+
+      consola.success('e2e version check pass.')
+      resolve()
+    })
+    child.stdout?.pipe(process.stdout)
+  })
+}
 async function e2eReset() {
   for (const [path, content] of Object.values(rawContent))
     await fs.writeFile(path, content, 'utf-8')
@@ -47,20 +62,6 @@ async function e2eReset() {
   /** End */
 }
 
-function getTomlVersion(content: string) {
-  const packageEndIndex = findSubStringEndIndex(content, 'name = "__e2e__"')
-
-  const versionEndIndex = findSubStringEndIndex(
-    content,
-    'version',
-    packageEndIndex,
-  )
-
-  const firstQuoteIndex = content.indexOf('"', versionEndIndex)
-  const secondQuoteIndex = content.indexOf('"', firstQuoteIndex + 1)
-
-  return content.substring(firstQuoteIndex + 1, secondQuoteIndex)
-}
 async function getVersions() {
   const packagePath = 'test/__e2e__/package.json'
   const packageContent = await fs.readFile(packagePath, 'utf-8')
@@ -78,8 +79,8 @@ async function getVersions() {
     versions: {
       package: JSON.parse(packageContent).version,
       tauriConf: JSON.parse(tauriConf).version,
-      toml: getTomlVersion(toml),
-      lock: getTomlVersion(lock),
+      toml: getCargoVersion(toml),
+      lock: getCargoVersion(lock),
     },
     contents: {
       package: [packagePath, packageContent],

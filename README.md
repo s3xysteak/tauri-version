@@ -39,6 +39,10 @@ $ npx tauri-version@latest patch
 
 Use `tauri-version -h` to see the whole help message.
 
+### Print current version:
+
+`tauri-version`
+
 ### Custom Commit Message
 
 `%s` in commit message will be replaced by version.
