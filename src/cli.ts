@@ -61,11 +61,23 @@ cli
 
       const getPath = (path: string) => toAbsolute(path, base)
 
-      if (!version) {
-        console.log(
-          getCurrentVersion(createContext(undefined, base)),
-        )
-        return
+      try {
+        const val = getCurrentVersion(createContext(undefined, base))
+        if (!version)
+          return consola.log(val)
+      }
+      catch (error) {
+        const msg = (error as Error).message
+        consola.warn(msg)
+
+        if (!version)
+          return
+
+        const isContinue = await consola.prompt(`Wanna continue? Using version from package.json.`, {
+          type: 'confirm',
+        })
+        if (!isContinue)
+          return
       }
 
       const ctx = createContext(version, base)
