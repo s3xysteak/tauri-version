@@ -10,7 +10,7 @@
 
     "paths": {
       "@/*": ["src/*"],
-      "@core/*": ["src/core/*"]
+      "@core/*": ["src/legend/core/*"]
     },
 
     "resolveJsonModule": true,

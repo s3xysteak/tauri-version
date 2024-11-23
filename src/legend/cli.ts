@@ -5,7 +5,7 @@ import { watch as fsWatch } from 'node:fs'
 import cac from 'cac'
 import { consola } from 'consola'
 import { createContext, getCurrentVersion, toAbsolute } from '.'
-import { version as pkgVersion } from '../package.json'
+import { version as pkgVersion } from '../../package.json'
 
 const cli = cac('tauri-version')
 

@@ -1,4 +1,4 @@
-import { version } from '@core/version'
+import { version } from '@/legend/core/version'
 
 import { describe, expect, it } from 'vitest'
 

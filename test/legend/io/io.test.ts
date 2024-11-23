@@ -1,6 +1,6 @@
 import { copyFileSync, readFileSync } from 'node:fs'
 import { fileURLToPath, URL } from 'node:url'
-import { io, isV1 } from '@core/io'
+import { io, isV1 } from '@/legend/core/io'
 import { resolve } from 'pathe'
 import { describe, expect, it } from 'vitest'
 

@@ -1,4 +1,4 @@
-import { findSubStringEndIndex, toAbsolute } from '@core/utils'
+import { findSubStringEndIndex, toAbsolute } from '@/legend/core/utils'
 import { normalize } from 'pathe'
 import { describe, expect, it } from 'vitest'
 

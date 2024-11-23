@@ -17,16 +17,23 @@
     "cli"
   ],
   "exports": {
-    "types": "./dist/index.d.ts",
-    "import": "./dist/index.mjs",
-    "require": "./dist/index.cjs"
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.cjs"
+    },
+    "./legend": {
+      "types": "./dist/legend/index.d.ts",
+      "import": "./dist/legend/index.mjs",
+      "require": "./dist/legend/index.cjs"
+    }
   },
   "main": "./dist/index.mjs",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
-  "bin": "./cli.mjs",
+  "bin": "./bin/cli.mjs",
   "files": [
-    "*.mjs",
+    "bin",
     "dist"
   ],
   "scripts": {
