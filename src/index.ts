@@ -7,7 +7,7 @@ export interface Options {
   lock: boolean | number
 }
 
-export function tauri(options?: Partial<Options>): VersionBumpOptions['execute'] {
+function tauri(options?: Partial<Options>): VersionBumpOptions['execute'] {
   const defaultOptions: Options = {
     lock: 1000 * 3,
   }
@@ -25,18 +25,23 @@ export function tauri(options?: Partial<Options>): VersionBumpOptions['execute']
 
     const pathUnderTauri = (p: string) => resolve(cwd, 'src-tauri', p)
     const targetHandler = [
+      // tauri.conf.json
       async () => {
         const path = pathUnderTauri('tauri.conf.json')
         const content = await fs.readFile(path, 'utf-8')
         const updatedContent = content.replace(new RegExp(`"version"\\s*:\\s*"${escapeRegExp(currentVersion)}"`), `"version": "${newVersion}"`)
         await fs.writeFile(path, updatedContent, 'utf-8')
       },
+
+      // Cargo.toml
       async () => {
         const path = pathUnderTauri('Cargo.toml')
         const content = await fs.readFile(path, 'utf-8')
         const updatedContent = content.replace(new RegExp(`version\\s*=\\s*"${escapeRegExp(currentVersion)}"`), `version = "${newVersion}"`)
         await fs.writeFile(path, updatedContent, 'utf-8')
       },
+
+      // Cargo.lock
       async () => {
         if (!opts.lock)
           return

@@ -5,7 +5,7 @@ import pkg from './package.json'
 
 export default defineBuildConfig({
   declaration: true,
-  externals: Object.keys(pkg.dependencies || {}),
+  externals: [...Object.keys(pkg.dependencies), ...Object.keys(pkg.devDependencies)],
   rollup: {
     esbuild: {
       minify: true,
