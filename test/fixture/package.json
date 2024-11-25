@@ -1,0 +1,12 @@
+{
+  "name": "fixture",
+  "type": "module",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "release": "bumpp --no-push"
+  },
+  "devDependencies": {
+    "bumpp": "catalog:"
+  }
+}
