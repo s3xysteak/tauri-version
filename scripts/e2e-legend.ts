@@ -12,6 +12,8 @@ let rawContent: {
   lock: string[]
 }
 
+await run()
+
 export async function run() {
   await e2e()
   await e2eReset()

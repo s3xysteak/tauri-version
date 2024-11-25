@@ -1,6 +1,10 @@
+import { fileURLToPath } from 'node:url'
 import { defineConfig } from 'bumpp'
-import tauri from '../../src/index'
+import tauri from 'tauri-version'
 
 export default defineConfig({
-  execute: tauri(),
+  cwd: fileURLToPath(new URL('.', import.meta.url)),
+  execute: tauri({
+    lock: false,
+  }),
 })

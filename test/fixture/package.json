@@ -1,12 +1,13 @@
 {
   "name": "fixture",
   "type": "module",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
-    "release": "bumpp --no-push"
+    "release": "bumpp --no-commit --no-tag --no-push"
   },
   "devDependencies": {
-    "bumpp": "catalog:"
+    "bumpp": "catalog:",
+    "tauri-version": "workspace:"
   }
 }

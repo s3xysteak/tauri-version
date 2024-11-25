@@ -28,13 +28,13 @@ export function tauri(options?: Partial<Options>): VersionBumpOptions['execute']
       async () => {
         const path = pathUnderTauri('tauri.conf.json')
         const content = await fs.readFile(path, 'utf-8')
-        const updatedContent = content.replace(new RegExp(`"version"\s*:\s*"${escapeRegExp(currentVersion)}"`), newVersion)
+        const updatedContent = content.replace(new RegExp(`"version"\\s*:\\s*"${escapeRegExp(currentVersion)}"`), `"version": "${newVersion}"`)
         await fs.writeFile(path, updatedContent, 'utf-8')
       },
       async () => {
         const path = pathUnderTauri('Cargo.toml')
         const content = await fs.readFile(path, 'utf-8')
-        const updatedContent = content.replace(new RegExp(`version\s*:\s*"${escapeRegExp(currentVersion)}"`), newVersion)
+        const updatedContent = content.replace(new RegExp(`version\\s*=\\s*"${escapeRegExp(currentVersion)}"`), `version = "${newVersion}"`)
         await fs.writeFile(path, updatedContent, 'utf-8')
       },
       async () => {

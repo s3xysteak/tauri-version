@@ -1,8 +1,8 @@
 [package]
 name = "__e2e__"
-version = "0.0.1"
+version = "1.0.0"
 description = "A Tauri App"
-authors = ["s3xysteak"]
+authors = [ "s3xysteak" ]
 edition = "2021"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
