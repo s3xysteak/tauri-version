@@ -3,7 +3,7 @@
   "type": "module",
   "version": "1.0.0-beta.1",
   "private": false,
-  "packageManager": "pnpm@9.13.2",
+  "packageManager": "pnpm@9.14.2",
   "description": "Update version for tauri-app.",
   "license": "MIT",
   "repository": {
@@ -55,13 +55,13 @@
     "pathe": "^1.1.2"
   },
   "devDependencies": {
-    "@antfu/eslint-config": "^3.9.1",
+    "@antfu/eslint-config": "^3.9.2",
     "@tsconfig/node20": "^20.1.4",
-    "@types/node": "^22.9.0",
+    "@types/node": "^22.10.0",
     "bumpp": "catalog:",
     "eslint": "^9.15.0",
     "smol-toml": "^1.3.1",
-    "typescript": "^5.6.3",
+    "typescript": "^5.7.2",
     "unbuild": "^2.0.0",
     "vitest": "^2.1.5"
   }
