@@ -20,7 +20,9 @@ import tauri from 'tauri-version'
 
 export default defineConfig({
   // execute: tauri(),
+
   // execute: tauri({/* options */})
+
   async execute(config) {
     await tauri({/* options */})(config)
     // do something
