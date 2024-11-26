@@ -28,6 +28,7 @@
   "exclude": [
     "**/node_modules/**",
     "**/dist/**",
-    "test/__e2e__/**"
+    "test/__e2e__/**",
+    "test/fixture/**"
   ]
 }
