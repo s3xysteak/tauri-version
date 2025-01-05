@@ -19,14 +19,15 @@ import { defineConfig } from 'bumpp'
 import tauri from 'tauri-version'
 
 export default defineConfig({
-  // execute: tauri(),
+  all: true,
+  execute: tauri(),
 
   // execute: tauri({/* options */})
 
-  async execute(config) {
-    await tauri({/* options */})(config)
-    // do something
-  }
+  // async execute(config) {
+  //   await tauri({/* options */})(config)
+  //   // do something
+  // }
 })
 ```
 
@@ -59,4 +60,4 @@ export default defineConfig({
 })
 ```
 
-`lock`: A Boolean or Number. After editing `Cargo.toml`, the Rust extension will update the `Cargo.lock` file. This option controls how `tauri-version` handles waiting for the `Cargo.lock` update. If set to `false`, it will skip waiting; if set to `true`, it will wait for the update to complete. If set to a number, it represents the timeout in milliseconds — the process will skip if the update isn't completed within the specified time. The default value is `1000 * 3` (3 seconds).
+`lock`: A Boolean or Number. After editing `Cargo.toml`, the Rust extension will update the `Cargo.lock` file. This option controls how `tauri-version` handles waiting for the `Cargo.lock` update. If set to `false`, it will skip waiting; if set to `true`, it will wait for the update to complete. If set to a number, it represents the timeout in milliseconds — the process will skip if the update isn't completed within the specified time. The default value is `true`.

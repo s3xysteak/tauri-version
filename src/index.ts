@@ -9,7 +9,7 @@ export interface Options {
 
 function tauri(options?: Partial<Options>): Extract<VersionBumpOptions['execute'], (...p: any[]) => any> {
   const defaultOptions: Options = {
-    lock: 1000 * 3,
+    lock: true,
   }
   const opts: Options = {
     ...defaultOptions,

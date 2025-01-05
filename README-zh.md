@@ -19,14 +19,15 @@ import { defineConfig } from 'bumpp'
 import tauri from 'tauri-version'
 
 export default defineConfig({
-  // execute: tauri(),
+  all: true,
+  execute: tauri(),
 
   // execute: tauri({/* options */})
 
-  async execute(config) {
-    await tauri({/* options */})(config)
-    // do something
-  }
+  // async execute(config) {
+  //   await tauri({/* options */})(config)
+  //   // do something
+  // }
 })
 ```
 
@@ -59,4 +60,4 @@ export default defineConfig({
 })
 ```
 
-`lock`: 布尔值或数字。由于修改 `Cargo.toml` 后会导致 Rust 扩展更新 `Cargo.lock` 文件，此选项控制是否等待 `Cargo.lock` 更新。如果设置为 `false`，则跳过等待；如果设置为 `true`，则等待更新完成；如果设置为数字，则表示超时时间（毫秒），超时后跳过等待。默认值为 `1000 * 3`（3 秒）。
+`lock`: 布尔值或数字。由于修改 `Cargo.toml` 后会导致 Rust 扩展更新 `Cargo.lock` 文件，此选项控制是否等待 `Cargo.lock` 更新。如果设置为 `false`，则跳过等待；如果设置为 `true`，则等待更新完成；如果设置为数字，则表示超时时间（毫秒），超时后跳过等待。默认值为 `true`。
