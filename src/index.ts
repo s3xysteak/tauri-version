@@ -55,15 +55,21 @@ function tauri(options?: Partial<Options>): Extract<VersionBumpOptions['execute'
           watcher.close()
         })
 
+        const noResponseMsg = setTimeout(() => {
+          consola.warn('Cargo.lock has not been updated in 3 seconds, maybe you wanna update it by yourself. Or change \'lock\' option to ignore it.')
+        }, 3000)
+        watcher.addListener('close', () => clearTimeout(noResponseMsg))
+        watcher.addListener('error', () => clearTimeout(noResponseMsg))
+
         if (typeof opts.lock === 'number') {
           setTimeout(() => {
             watcher.close()
-            consola.warn('Cargo.lock not updated in time, ignore it.')
+            consola.warn('Cargo.lock has not been updated in time, ignore it.')
           }, opts.lock)
         }
 
-        const watcherPromise = () => new Promise<void>(res => watcher.addListener('close', res))
-        await watcherPromise()
+        const watcherFinishedPromise = () => new Promise<void>(res => watcher.addListener('close', res))
+        await watcherFinishedPromise()
       },
     ]
 
