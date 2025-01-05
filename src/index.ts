@@ -7,7 +7,7 @@ export interface Options {
   lock: boolean | number
 }
 
-function tauri(options?: Partial<Options>): VersionBumpOptions['execute'] {
+function tauri(options?: Partial<Options>): Extract<VersionBumpOptions['execute'], (...p: any[]) => any> {
   const defaultOptions: Options = {
     lock: 1000 * 3,
   }
