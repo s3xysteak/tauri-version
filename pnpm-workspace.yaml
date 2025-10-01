@@ -1,5 +1,0 @@
-packages:
-  - test/fixture
-
-catalog:
-  bumpp: ^9.8.1
