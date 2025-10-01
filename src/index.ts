@@ -1,10 +1,10 @@
 import type { VersionBumpOptions } from 'bumpp'
-import { promises as fs, watch as fsWatch } from 'node:fs'
-import consola from 'consola'
-import { resolve } from 'pathe'
+import * as fs from 'node:fs/promises'
+import { join } from 'pathe'
+import { createRegex } from './handler'
 
 export interface Options {
-  lock: boolean | number
+  lock: boolean
 }
 
 function tauri(options?: Partial<Options>): Extract<VersionBumpOptions['execute'], (...p: any[]) => any> {
@@ -23,21 +23,26 @@ function tauri(options?: Partial<Options>): Extract<VersionBumpOptions['execute'
     const { cwd } = ctx.options
     const { newVersion, currentVersion } = ctx.state
 
-    const pathUnderTauri = (p: string) => resolve(cwd, 'src-tauri', p)
+    const getPath = (p: string) => join(cwd, 'src-tauri', p)
+
+    const tauriConfJsonPath = getPath('tauri.conf.json')
+    const tauriConfJsonContent = await fs.readFile(tauriConfJsonPath, 'utf-8')
+    const name: string = JSON.parse(tauriConfJsonContent).productName
+
+    const regex = createRegex(name, currentVersion, newVersion)
+
     const targetHandler = [
       // tauri.conf.json
       async () => {
-        const path = pathUnderTauri('tauri.conf.json')
-        const content = await fs.readFile(path, 'utf-8')
-        const updatedContent = content.replace(new RegExp(`"version"\\s*:\\s*"${escapeRegExp(currentVersion)}"`), `"version": "${newVersion}"`)
-        await fs.writeFile(path, updatedContent, 'utf-8')
+        const updatedContent = regex.conf(tauriConfJsonContent)
+        await fs.writeFile(tauriConfJsonPath, updatedContent, 'utf-8')
       },
 
       // Cargo.toml
       async () => {
-        const path = pathUnderTauri('Cargo.toml')
+        const path = getPath('Cargo.toml')
         const content = await fs.readFile(path, 'utf-8')
-        const updatedContent = content.replace(new RegExp(`version\\s*=\\s*"${escapeRegExp(currentVersion)}"`), `version = "${newVersion}"`)
+        const updatedContent = regex.toml(content)
         await fs.writeFile(path, updatedContent, 'utf-8')
       },
 
@@ -46,39 +51,15 @@ function tauri(options?: Partial<Options>): Extract<VersionBumpOptions['execute'
         if (!opts.lock)
           return
 
-        const path = pathUnderTauri('Cargo.lock')
-
-        const watcher = fsWatch(path, (e) => {
-          if (e !== 'change')
-            return
-
-          watcher.close()
-        })
-
-        const noResponseMsg = setTimeout(() => {
-          consola.warn('Cargo.lock has not been updated in 3 seconds, maybe you wanna update it by yourself. Or change \'lock\' option to ignore it.')
-        }, 3000)
-        watcher.addListener('close', () => clearTimeout(noResponseMsg))
-        watcher.addListener('error', () => clearTimeout(noResponseMsg))
-
-        if (typeof opts.lock === 'number') {
-          setTimeout(() => {
-            watcher.close()
-            consola.warn('Cargo.lock has not been updated in time, ignore it.')
-          }, opts.lock)
-        }
-
-        const watcherFinishedPromise = () => new Promise<void>(res => watcher.addListener('close', res))
-        await watcherFinishedPromise()
+        const path = getPath('Cargo.lock')
+        const content = await fs.readFile(path, 'utf-8')
+        const updatedContent = regex.lock(content)
+        await fs.writeFile(path, updatedContent, 'utf-8')
       },
     ]
 
     await Promise.all(targetHandler.map(fn => fn()))
   }
-}
-
-function escapeRegExp(text: string) {
-  return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, '\\$&')
 }
 
 export default tauri
