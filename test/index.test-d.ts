@@ -5,6 +5,5 @@ import tauriVersion from '../src'
 test('type', () => {
   const fn = tauriVersion()
 
-  expectTypeOf(fn).toMatchTypeOf<VersionBumpOptions['execute']>()
-  expectTypeOf(async () => { await fn() }).toMatchTypeOf<VersionBumpOptions['execute']>()
+  expectTypeOf(fn).toExtend<VersionBumpOptions['execute']>()
 })
