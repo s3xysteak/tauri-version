@@ -41,7 +41,6 @@ npm bumpp -h # --help
 npm bumpp patch # major/minor/patch, etc...
 npm bumpp --no-commit --no-tag --no-push
 npm bumpp -r # --recursive. For monorepo
-npm bumpp -a # --all. Commit/tag/push ALL pending files, not just the ones that were bumped.
 ```
 
 More options please refer to [bumpp](https://github.com/antfu-collective/bumpp) .
@@ -60,4 +59,4 @@ export default defineConfig({
 })
 ```
 
-`lock`: A Boolean or Number. After editing `Cargo.toml`, the Rust extension will update the `Cargo.lock` file. This option controls how `tauri-version` handles waiting for the `Cargo.lock` update. If set to `false`, it will skip waiting; if set to `true`, it will wait for the update to complete. If set to a number, it represents the timeout in milliseconds — the process will skip if the update isn't completed within the specified time. The default value is `true`.
+`lock`: Default `true`. A Boolean, indicating if edit cargo.lock.

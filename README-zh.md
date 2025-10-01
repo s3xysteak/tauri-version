@@ -41,7 +41,6 @@ npm bumpp -h # --help
 npm bumpp patch # major/minor/patch, etc...
 npm bumpp --no-commit --no-tag --no-push
 npm bumpp -r # --recursive. For monorepo
-npm bumpp -a # --all. Commit/tag/push ALL pending files, not just the ones that were bumped.
 ```
 
 更多选项请移步 [bumpp](https://github.com/antfu-collective/bumpp) 。
@@ -60,4 +59,4 @@ export default defineConfig({
 })
 ```
 
-`lock`: 布尔值或数字。由于修改 `Cargo.toml` 后会导致 Rust 扩展更新 `Cargo.lock` 文件，此选项控制是否等待 `Cargo.lock` 更新。如果设置为 `false`，则跳过等待；如果设置为 `true`，则等待更新完成；如果设置为数字，则表示超时时间（毫秒），超时后跳过等待。默认值为 `true`。
+`lock`: 默认为`true`。一个布尔值，用于指定是否要更新cargo.lock。
