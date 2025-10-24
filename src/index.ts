@@ -17,9 +17,6 @@ function tauri(options?: Partial<Options>): Extract<VersionBumpOptions['execute'
   }
 
   return async (ctx) => {
-    if (!ctx)
-      return
-
     const { cwd } = ctx.options
     const { newVersion, currentVersion } = ctx.state
 

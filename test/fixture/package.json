@@ -8,7 +8,7 @@
     "tauri-version": "tauri-version"
   },
   "devDependencies": {
-    "bumpp": "^9.8.1",
+    "bumpp": "catalog:",
     "tauri-version": "link:../.."
   }
 }

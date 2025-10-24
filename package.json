@@ -58,7 +58,7 @@
     "@antfu/eslint-config": "^5.4.1",
     "@tsconfig/node20": "^20.1.6",
     "@types/node": "^22.18.8",
-    "bumpp": "^10.2.3",
+    "bumpp": "catalog:",
     "eslint": "^9.36.0",
     "smol-toml": "^1.4.2",
     "typescript": "^5.9.3",

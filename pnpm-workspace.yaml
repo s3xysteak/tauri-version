@@ -1,0 +1,5 @@
+packages:
+  - test/fixture
+
+catalog:
+  bumpp: ^10.2.3
