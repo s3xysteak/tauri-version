@@ -1,0 +1,2 @@
+overrides:
+  tauri-version: link:../..
