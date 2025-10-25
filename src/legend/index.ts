@@ -1,7 +1,8 @@
+import type { VersionOption } from '@/legend/core/version'
 import { io, isV1 } from '@/legend/core/io'
 import { getCargoVersion, replaceTomlVersion } from '@/legend/core/tomlParser'
 import { readOnly, toAbsolute } from '@/legend/core/utils'
-import { version, type VersionOption } from '@/legend/core/version'
+import { version } from '@/legend/core/version'
 
 export * from '@/legend/core/io'
 export * from '@/legend/core/tomlParser'

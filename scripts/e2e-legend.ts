@@ -1,9 +1,9 @@
 import { exec } from 'node:child_process'
 import { promises as fs } from 'node:fs'
 import process from 'node:process'
+import { consola } from 'consola'
 import { version } from '@/legend/core/version'
 import { getCargoVersion } from '@/legend/index'
-import { consola } from 'consola'
 
 let rawContent: {
   package: string[]

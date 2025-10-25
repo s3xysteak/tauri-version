@@ -1,9 +1,9 @@
 import { readFileSync, writeFileSync } from 'node:fs'
 import { fileURLToPath, URL } from 'node:url'
-import { findVersionIndex, getCargoVersion, replaceTomlVersion } from '@/legend/core/tomlParser'
 import { resolve } from 'pathe'
-
 import { describe, expect, it } from 'vitest'
+
+import { findVersionIndex, getCargoVersion, replaceTomlVersion } from '@/legend/core/tomlParser'
 
 describe('tomlParser', () => {
   const path = (p: string) => resolve(fileURLToPath(new URL('./', import.meta.url)), p)

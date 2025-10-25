@@ -1,6 +1,6 @@
-import { version } from '@/legend/core/version'
-
 import { describe, expect, it } from 'vitest'
+
+import { version } from '@/legend/core/version'
 
 describe('version', () => {
   const v = '1.2.3'

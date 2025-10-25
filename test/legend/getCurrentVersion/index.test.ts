@@ -1,5 +1,5 @@
-import { createContext, getCurrentVersion } from '@/legend/index'
 import { describe, expect, it } from 'vitest'
+import { createContext, getCurrentVersion } from '@/legend/index'
 
 describe('getCurrentVersion', () => {
   it('should return version when all versions match', () => {

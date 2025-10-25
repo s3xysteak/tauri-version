@@ -1,6 +1,6 @@
-import { findSubStringEndIndex, toAbsolute } from '@/legend/core/utils'
 import { normalize } from 'pathe'
 import { describe, expect, it } from 'vitest'
+import { findSubStringEndIndex, toAbsolute } from '@/legend/core/utils'
 
 describe('utils', () => {
   it('toAbsolute', () => {
