@@ -4,9 +4,32 @@ import { join } from 'pathe'
 import { createRegex } from './handler'
 
 export interface Options {
+  /**
+   * Whether change the Cargo.lock
+   * @default true
+   */
   lock: boolean
 }
 
+/**
+ * @param options Options
+ * @returns A async function, which receive callback params of `execute` in `bumpp`.
+ *
+ * @example
+ * ```js
+ * import { defineConfig } from 'bumpp'
+ * import tauri from 'tauri-version'
+ *
+ * export default defineConfig({
+ *   all: true,
+ *   execute: tauri(),
+ *   // execute: async (ctx) => {
+ *   //   await tauri({ lock: false })(ctx)
+ *   //   do something else
+ *   // }
+ * })
+ * ```
+ */
 function tauri(options?: Partial<Options>): Extract<VersionBumpOptions['execute'], (...p: any[]) => any> {
   const defaultOptions: Options = {
     lock: true,
