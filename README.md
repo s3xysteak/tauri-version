@@ -1,8 +1,17 @@
-# tauri-version
+<h1 align="center">tauri-version</h1>
 
-English | [简体中文](./README-zh.md)
+<p align="center">
+A simple tool for conveniently upgrading the tauri-app version.
+</p>
 
-A simple tool for conveniently upgrading the tauri-app version, similar in function to `npm version`.
+<br>
+<p align="center">
+🌏 English | [简体中文](./README-zh.md)
+</p>
+<br>
+
+> [!NOTE]
+> In v0, it provides a CLI, which still exist in v1 for backward compatibility. For more information please refer to [document](./src/legend/README.md). This feature will be removed in v2.
 
 ## Install
 
@@ -24,8 +33,8 @@ export default defineConfig({
 
   // execute: tauri({/* options */})
 
-  // async execute(config) {
-  //   await tauri({/* options */})(config)
+  // execute: async (ctx) => {
+  //   await tauri({/* options */})(ctx)
   //   // do something
   // }
 })
@@ -36,7 +45,7 @@ export default defineConfig({
 Basic usage:
 
 ```sh
-npm bumpp
+npm bumpp # it will open a GUI in console
 npm bumpp -h # --help
 npm bumpp patch # major/minor/patch, etc...
 npm bumpp --no-commit --no-tag --no-push
@@ -51,12 +60,4 @@ Please refer to [test](/test/fixture/)
 
 ## Options
 
-```js
-export default defineConfig({
-  execute: tauri({
-    // options
-  })
-})
-```
-
-`lock`: Default `true`. A Boolean, indicating if edit cargo.lock.
+- `lock`: Default `true`. A Boolean, indicating if edit cargo.lock.

@@ -1,8 +1,17 @@
-# tauri-version
+<h1 align="center">tauri-version</h1>
 
-[English](./README.md) | 简体中文
+<p align="center">
+方便地升级 tauri-app 版本的简单工具
+</p>
 
-方便地升级 tauri-app 版本的简单工具，其作用类似于`npm version`.
+<br>
+<p align="center">
+🌏 [English](./README.md) | 简体中文
+</p>
+<br>
+
+> [!NOTE]
+> 在 v0 中提供的 CLI 工具， 为了向后兼容仍然在v1中保留。 更多关于v0的信息请参考 [document](./src/legend/README.md)。 在 v2 这个功能将会被移除.
 
 ## 安装
 
@@ -24,8 +33,8 @@ export default defineConfig({
 
   // execute: tauri({/* options */})
 
-  // async execute(config) {
-  //   await tauri({/* options */})(config)
+  // execute: async (ctx) => {
+  //   await tauri({/* options */})(ctx)
   //   // do something
   // }
 })
@@ -36,7 +45,7 @@ export default defineConfig({
 基本使用:
 
 ```sh
-npm bumpp
+npm bumpp # it will open a GUI in console
 npm bumpp -h # --help
 npm bumpp patch # major/minor/patch, etc...
 npm bumpp --no-commit --no-tag --no-push
@@ -51,12 +60,4 @@ npm bumpp -r # --recursive. For monorepo
 
 ## 选项
 
-```js
-export default defineConfig({
-  execute: tauri({
-    // options
-  })
-})
-```
-
-`lock`: 默认为`true`。一个布尔值，用于指定是否要更新cargo.lock。
+- `lock`: Default `true`. A Boolean, indicating if edit cargo.lock.
