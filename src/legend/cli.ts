@@ -50,6 +50,8 @@ cli
     { default: true },
   )
   .action(async (version, options) => {
+    consola.warn('[Deprecated] This feature has been deprecated. Please refer to README. It will be removed in next major version.')
+
     try {
       const {
         message = '%s',
