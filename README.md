@@ -4,11 +4,7 @@
 A simple tool for conveniently upgrading the tauri-app version.
 </p>
 
-<br>
-<p align="center">
 🌏 English | [简体中文](./README-zh.md)
-</p>
-<br>
 
 > [!NOTE]
 > In v0, it provides a CLI, which still exist in v1 for backward compatibility. For more information please refer to [document](./src/legend/README.md). This feature will be removed in v2.

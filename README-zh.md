@@ -4,11 +4,7 @@
 方便地升级 tauri-app 版本的简单工具
 </p>
 
-<br>
-<p align="center">
 🌏 [English](./README.md) | 简体中文
-</p>
-<br>
 
 > [!NOTE]
 > 在 v0 中提供的 CLI 工具， 为了向后兼容仍然在v1中保留。 更多关于v0的信息请参考 [document](./src/legend/README.md)。 在 v2 这个功能将会被移除.
