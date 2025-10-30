@@ -41,11 +41,11 @@ export default defineConfig({
 基本使用:
 
 ```sh
-npm bumpp # it will open a GUI in console
-npm bumpp -h # --help
-npm bumpp patch # major/minor/patch, etc...
-npm bumpp --no-commit --no-tag --no-push
-npm bumpp -r # --recursive. For monorepo
+npx bumpp # it will open a GUI in console
+npx bumpp -h # --help
+npx bumpp patch # major/minor/patch, etc...
+npx bumpp --no-commit --no-tag --no-push
+npx bumpp -r # --recursive. For monorepo
 ```
 
 更多选项请移步 [bumpp](https://github.com/antfu-collective/bumpp) 。
